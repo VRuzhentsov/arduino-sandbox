@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "etherport-client": "^0.1.4",
+    "firmata": "^2.0.0",
     "johnny-five": "^1.0.0",
-    "robotjs": "^0.5.1"
+    "serialport": "^7.1.4",
+    "udp-serial": "^0.2.0"
   }
 }
