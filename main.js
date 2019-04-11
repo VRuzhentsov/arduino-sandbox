@@ -1,49 +1,42 @@
-const VirtualSerialPort = require('udp-serial').SerialPort;
-const net = require('net');
-const {Board} = require('firmata');
-const {Board: J5Board} = require("johnny-five");
-const SerialPort = require('serialport');
-const io = require('socket.io-client');
-console.log('init')
+const {Board: FirmataBoard} = require('firmata');
+const {Board: J5Board, Led: {RGB:RGBLed}} = require("johnny-five");
+console.log('init');
 
-const options = {
+const {EtherPortClient} = require('etherport-client');
+
+const etherPortClient = new EtherPortClient({
     host: '192.168.193.10',
-        port: 8080
-};
-const WebSocket = require('ws');
-const socket = new WebSocket('ws://192.168.193.10:81');
-// const socket = io('ws://192.168.193.10:81');
-
-socket.on('open', (socket) => {
-   console.log('socket connected')
+    port: 3030
 });
 
-// const virtualSerialPort = new VirtualSerialPort(options);
+const nodeMCUBoard = new FirmataBoard(etherPortClient);
 
-// const io  = new Board(virtualSerialPort);
+nodeMCUBoard.once('ready', function () {
+    console.log('NodeMCU ready!');
+    console.log(
+        nodeMCUBoard.firmware.name + "-" +
+        nodeMCUBoard.firmware.version.major + "." +
+        nodeMCUBoard.firmware.version.minor
+    );
+    nodeMCUBoard.isReady = true;
 
-// var client = net.connect(options, function() { //'connect' listener
-//     console.log('connected to server!');
-//
-//     var socketClient = client;
-//
-//     //we can use the socketClient instead of a serial port as our transport
-//     var io = new Board(socketClient);
-//
-//     io.on('ready', function(){
-//         console.log('io ready');
-//         io.isReady = true;
-//
-//         var board = new J5Board({io: io, repl: true});
-//
-//         board.on('ready', function(){
-//             console.log('five ready');
-//
-//             //Full Johnny-Five support here:
-//
-//
-//
-//         });
-//     });
-//
-// });
+    const arduinoUno = new J5Board({
+        io: nodeMCUBoard,
+        timeout: 1e5,
+        repl: false
+    });
+
+    arduinoUno.on('ready', function () {
+        console.log('UNO ready!');
+
+        const rgb = new RGBLed([5, 6, 3]);
+        const randomColor = () => Math.random().toString(16).substr(-6);
+
+        this.loop(100, function () {
+            const countedColor = randomColor();
+            console.log('countedColor', countedColor);
+            rgb.color(countedColor);
+        });
+    });
+
+});
