@@ -1,15 +1,16 @@
 const {Board: FirmataBoard} = require('firmata');
-const {Board: J5Board, Led: {RGB:RGBLed}} = require("johnny-five");
+const {Board: J5Board, Led: {RGB: RGBLed}} = require("johnny-five");
+const {SerialPort: VirtualSerialPort} = require('udp-serial');
+
+//create the udp serialport and specify the host and port to connect to
+const UDPSerialPort = new VirtualSerialPort({
+    host: '192.168.4.1',
+    type: 'udp4',
+    port: 1025
+});
 console.log('init');
 
-const {EtherPortClient} = require('etherport-client');
-
-const etherPortClient = new EtherPortClient({
-    host: '192.168.193.10',
-    port: 3030
-});
-
-const nodeMCUBoard = new FirmataBoard(etherPortClient);
+const nodeMCUBoard = new FirmataBoard(UDPSerialPort);
 
 nodeMCUBoard.once('ready', function () {
     console.log('NodeMCU ready!');
