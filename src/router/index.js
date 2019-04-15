@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 
 exports.router = function (request, response) {
-  console.log('request starting...');
   const clientFolder = '/client-app';
 
   let filePath = `.${clientFolder}${request.url}`;
@@ -36,6 +35,8 @@ exports.router = function (request, response) {
       contentType = 'text/html';
       break;
   }
+
+  console.log(`request ${filePath}`);
 
   fs.readFile(filePath, (error, content) => {
     if (error) {
