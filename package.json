@@ -27,7 +27,8 @@
     "socket.io-client": "^2.2.0",
     "socketio": "^1.0.0",
     "udp-serial": "^0.2.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.5"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
