@@ -59,7 +59,7 @@
             const hexObj = pickrObj.toHEX();
             const hexValueNumber = hexObj[0] + hexObj[1] + hexObj[2];
             console.log(hexValueNumber);
-            socket.emit('message', { color: hexValueNumber });
+            socket.emit('message.rgbled', { color: hexValueNumber });
           });
         },
       },

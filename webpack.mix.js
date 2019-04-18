@@ -11,4 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('frontend-src/main-frontend.js', 'client-app/js');
+mix.setPublicPath('client-app')
+  .js('frontend-src/main-frontend.js', 'client-app/js');

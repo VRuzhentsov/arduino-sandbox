@@ -8,9 +8,9 @@ const { app } = require('./src/app');
 const main = () => {
   httpServer.listen(httpServerPort);
 
-  console.log(`Server tart listening on port: ${httpServerPort}`);
+  console.log(`Server start listening on port: ${httpServerPort}`);
 
-  const serialPort = new SerialPort('COM4', {
+  const serialPort = new SerialPort('COM5', {
     baudRate: 115200,
   });
 

@@ -16,9 +16,20 @@
           {
             url: '/color-picker',
             title: 'Color picker for RGB LED'
-          }
+          },
+          {
+            url: '/stepper-sandbox',
+            title: 'Stepper sandbox'
+          },
         ]
       };
     }
   };
 </script>
+
+<style lang="scss" scoped>
+    ul {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
