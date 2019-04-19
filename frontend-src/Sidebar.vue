@@ -21,6 +21,10 @@
             url: '/stepper-sandbox',
             title: 'Stepper sandbox'
           },
+          {
+            url: '/accelerometer-sandbox',
+            title: 'Accelerometer sandbox'
+          },
         ]
       };
     }

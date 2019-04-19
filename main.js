@@ -11,12 +11,16 @@ const main = () => {
   console.log(`Server start listening on port: ${httpServerPort}`);
 
   const serialPort = new SerialPort('COM5', {
-    baudRate: 115200,
+    baudRate: 57600,
   });
 
   const arduinoUno = new Board({
     port: serialPort,
     repl: true,
+  });
+
+  arduinoUno.on('error', function (error) {
+    console.log(console.log(error, error.stack.split('\n')));
   });
 
   arduinoUno.on('ready', app);

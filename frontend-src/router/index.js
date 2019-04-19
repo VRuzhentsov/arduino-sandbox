@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import ColorPickerWithLed from '../pages/ColorPickerWithLed.vue';
 import StepperSandbox from '../pages/StepperSandbox.vue';
+import AccelerometerSandbox from '../pages/AccelerometerSandbox.vue';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/stepper-sandbox',
     component: StepperSandbox,
+  },
+  {
+    path: '/accelerometer-sandbox',
+    component: AccelerometerSandbox,
   },
 ];
 
