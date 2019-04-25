@@ -2,13 +2,13 @@
     <div>
         <h2>Accelerometer sandbox</h2>
         <section >
-            <p>{{accelerometer.x}}</p>
-            <p>{{accelerometer.y}}</p>
-            <p>{{accelerometer.z}}</p>
+            <p>X: {{accelerometer.x}}</p>
+            <p>Y: {{accelerometer.y}}</p>
+            <p>Z: {{accelerometer.z}}</p>
 
         </section>
         <div class="card-wrapper">
-            <div id="card-1" class="card" :style="`transform:rotateX(${-(accelerometer.x + 0.5)*10}deg) rotateY(${(accelerometer.y + 0.8)*10}deg)`">
+            <div id="card-1" class="card" :style="`transform:rotateX(${-(accelerometer.x)*10}deg) rotateY(${(accelerometer.y)*10}deg)`">
                 <div class="border">
                     <header>
                         <h2>#Codevember</h2>

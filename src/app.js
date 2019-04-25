@@ -1,7 +1,10 @@
 const _ = require('underscore');
-const { Stepper, Led: { RGB: RGBLed }, IMU } = require('johnny-five');
+const {
+  Stepper, Led: { RGB: RGBLed }, IMU, Servo,
+} = require('johnny-five');
 const { ioServer } = require('./ioServer');
 const { stepperMotorThrottledCB } = require('./controllers/stepperMotorThrottled');
+const { accelerometerSandbox } = require('./controllers/accelerometerSandbox');
 
 exports.app = function () {
   console.log('UNO ready!');
@@ -26,6 +29,11 @@ exports.app = function () {
     controller: 'MPU6050',
   });
 
+  const servo = new Servo({
+    pin: 10,
+    type: 'continuous',
+  });
+
   ioServer.on('connection', (socket) => {
     console.log('Socket client connected:');
 
@@ -36,41 +44,7 @@ exports.app = function () {
       rgb.color(color);
     });
 
-    imu.on('change', function (changedObject, objectName) {
-      const data = {
-        accelerometer: _.pick(this.accelerometer, [
-          'zeroV',
-          'pitch',
-          'roll',
-          'x',
-          'y',
-          'z',
-          'acceleration',
-          'inclination',
-          'orientation',
-        ]),
-        gyro: _.pick(this.gyro, [
-          'x',
-          'y',
-          'z',
-          'isCalibrated',
-          'pitch',
-          'rate',
-          'roll',
-          'yaw',
-        ]),
-        thermometer: _.pick(this.thermometer, [
-          'celsius',
-          'fahrenheit',
-          'kelvin',
-          'C',
-          'F',
-          'K',
-          'freq',
-        ]),
-      };
-      socket.emit('message.imu', data);
-    });
+    imu.on('change', accelerometerSandbox(socket, servo, rgb));
   });
 
   rgb.color(currentColor);
